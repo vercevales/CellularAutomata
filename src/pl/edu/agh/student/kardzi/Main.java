@@ -1,17 +1,28 @@
 package pl.edu.agh.student.kardzi;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
-        Rule rule90 = new Rule();
-        rule90.addRule(1, 1, 1, 0)
-                .addRule(1, 1, 0, 1)
-                .addRule(1, 0, 1, 0)
-                .addRule(1, 0, 0, 1)
-                .addRule(0, 1, 1, 1)
-                .addRule(0, 1, 0, 0)
-                .addRule(0, 0, 1, 1)
-                .addRule(0, 0, 0, 0);
+        List<Cell> space = new ArrayList<>(99);
+        for(int i=0; i < 99; i++) {
+            space.add(new Cell());
+        }
+        Operations.generateLinearNeighbourhood(space);
+
+        space.get(48).setState(State.ALIVE);
+
+        for(int i=0; i<40; i++) {
+            Operations.printLinear(space);
+            Operations.generateNextSpace(space, new Rule90());
+            try {
+                System.in.read();
+            } catch (IOException e) {
+                //donotking
+            }
+        }
     }
 }
