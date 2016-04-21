@@ -2,7 +2,6 @@ package pl.edu.agh.student.kardzi;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by kdziegie on 2016-04-18.
@@ -15,8 +14,13 @@ public class Cell {
     private List<Cell> neighbours;
 
     Cell(){
-        state=State.DEAD;
-        neighbours = new ArrayList<>();
+        this.state=State.DEAD;
+        this.neighbours = new ArrayList<>();
+    }
+
+    Cell(State state) {
+        this.state = state;
+        this.neighbours = new ArrayList<>();
     }
 
     public State getState(){

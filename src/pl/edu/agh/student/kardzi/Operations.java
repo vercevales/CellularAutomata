@@ -1,5 +1,6 @@
 package pl.edu.agh.student.kardzi;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,8 +18,15 @@ public class Operations {
     }
 
     public static List<Cell> generateNextSpace(List<Cell> space, Rule rule) {
-        for (Cell cell : space) {
-            cell.setState(rule.nextCellState(cell, space));
+        List<Cell> previousStepSpace = new ArrayList<>(space.size());
+        //copying current space
+        for (Cell previous : space) {
+            previousStepSpace.add(new Cell(previous.getState()));
+        }
+        Operations.generateLinearNeighbourhood(previousStepSpace);
+        //printLinear(previousStepSpace);
+        for(int i=0; i<space.size(); i++) {
+            space.get(i).setState(rule.nextCellState(previousStepSpace.get(i)));
         }
         return space;
     }
