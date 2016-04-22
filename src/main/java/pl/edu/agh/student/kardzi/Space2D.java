@@ -16,10 +16,10 @@ public class Space2D {
         this.rows = rows;
         this.columns = columns;
         space = new ArrayList<>(rows);
-        List<Cell> internal = null;
+        List<Cell> internal;
         for(int i=0; i<rows;i++) {
+            internal = new ArrayList<>();
             for(int j=0; j<columns; j++) {
-                internal = new ArrayList<>();
                 internal.add(new Cell());
             }
             space.add(internal);
@@ -35,6 +35,7 @@ public class Space2D {
     }
 
     public Cell get(int row, int column) throws OutOfBoundariesException{
-        return space.get(row).get(column);
+        List<Cell> internal = space.get(row);
+        return internal.get(column);
     }
 }
