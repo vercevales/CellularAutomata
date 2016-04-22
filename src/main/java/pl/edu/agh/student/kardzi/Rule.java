@@ -1,6 +1,6 @@
 package pl.edu.agh.student.kardzi;
 
-import java.util.List;
+import pl.edu.agh.student.kardzi.enums.State;
 
 /**
  * Created by kdziegie on 2016-04-20.

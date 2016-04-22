@@ -1,6 +1,8 @@
-package pl.edu.agh.student.kardzi;
+package pl.edu.agh.student.kardzi.impl;
 
-import java.util.List;
+import pl.edu.agh.student.kardzi.Cell;
+import pl.edu.agh.student.kardzi.Rule;
+import pl.edu.agh.student.kardzi.enums.State;
 
 /**
  * Created by kdziegie on 2016-04-21.
@@ -13,7 +15,7 @@ public final class GameOfLifeRule implements Rule {
                 .filter(s -> s.getState() == State.ALIVE)
                 .count();
         if(cell.getState()==State.DEAD && aliveNeighbours == 3) newState = State.ALIVE;
-        if(cell.getState()==State.ALIVE && (aliveNeighbours == 3 || aliveNeighbours == 2) ) newState = State.ALIVE;
+        else if(cell.getState()==State.ALIVE && (aliveNeighbours == 3 || aliveNeighbours == 2) ) newState = State.ALIVE;
                 else newState=State.DEAD;
 
         return newState;

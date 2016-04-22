@@ -1,6 +1,8 @@
-package pl.edu.agh.student.kardzi;
+package pl.edu.agh.student.kardzi.impl;
 
-import java.util.List;
+import pl.edu.agh.student.kardzi.Cell;
+import pl.edu.agh.student.kardzi.Rule;
+import pl.edu.agh.student.kardzi.enums.State;
 
 /**
  * Created by kdziegie on 2016-04-20.

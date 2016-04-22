@@ -1,6 +1,13 @@
 package pl.edu.agh.student.kardzi;
 
 
+import pl.edu.agh.student.kardzi.enums.BoundaryCondition;
+import pl.edu.agh.student.kardzi.enums.NeighbourhoodType;
+import pl.edu.agh.student.kardzi.enums.State;
+import pl.edu.agh.student.kardzi.exceptions.OutOfBoundariesException;
+import pl.edu.agh.student.kardzi.impl.GameOfLifeRule;
+
+import java.io.IOException;
 
 public class Main {
 
@@ -26,7 +33,26 @@ public class Main {
         }*/
         //2D
         Space2D space = new Space2D(10, 10);
-        Operations.generatePeriodicMooresNeighbourhood(space);
+        Operations.generateNeighbourhood(space, NeighbourhoodType.MOORE, BoundaryCondition.PERIODIC);
+        try {
+            space.get(3, 4).setState(State.ALIVE);
+            space.get(4, 4).setState(State.ALIVE);
+            space.get(5, 4).setState(State.ALIVE);
+        } catch (OutOfBoundariesException e) {
+            System.out.print(e.getMessage());
+        }
+        for(int i=0; i< 100; i++){
+
+
+            Operations.print2D(space);
+            Operations.generateNextSpace2D(space, new GameOfLifeRule());
+            try {
+                System.in.read();
+            } catch (IOException e) {
+                //donotking
+            }
+
+        }
 
     }
 }

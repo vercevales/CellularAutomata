@@ -1,5 +1,7 @@
 package pl.edu.agh.student.kardzi;
 
+import pl.edu.agh.student.kardzi.enums.State;
+
 import java.util.ArrayList;
 import java.util.List;
 

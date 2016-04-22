@@ -1,5 +1,7 @@
 package pl.edu.agh.student.kardzi;
 
+import pl.edu.agh.student.kardzi.exceptions.OutOfBoundariesException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,21 +10,21 @@ import java.util.List;
  */
 public class Space2D {
 
-    private List<List<Cell>> space;
+    private List<List<Cell>> spaceAsList;
     private int rows = 0;
     private int columns = 0;
 
     public Space2D(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
-        space = new ArrayList<>(rows);
+        spaceAsList = new ArrayList<>(rows);
         List<Cell> internal;
         for(int i=0; i<rows;i++) {
             internal = new ArrayList<>();
             for(int j=0; j<columns; j++) {
                 internal.add(new Cell());
             }
-            space.add(internal);
+            spaceAsList.add(internal);
         }
     }
 
@@ -34,8 +36,16 @@ public class Space2D {
         return rows;
     }
 
-    public Cell get(int row, int column) throws OutOfBoundariesException{
-        List<Cell> internal = space.get(row);
+    public Cell get(int row, int column) throws OutOfBoundariesException {
+        List<Cell> internal = spaceAsList.get(row);
         return internal.get(column);
+    }
+
+    public List<List<Cell>> getSpaceAsList() {
+        return spaceAsList;
+    }
+
+    public void setSpaceAsList(List<List<Cell>> spaceAsList) {
+        this.spaceAsList = spaceAsList;
     }
 }
