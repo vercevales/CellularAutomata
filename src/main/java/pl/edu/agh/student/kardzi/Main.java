@@ -32,26 +32,27 @@ public class Main {
             }
         }*/
         //2D
-        Space2D space = new Space2D(10, 10);
+        Space2D space = new Space2D(20, 20);
         Operations.generateNeighbourhood(space, NeighbourhoodType.MOORE, BoundaryCondition.PERIODIC);
         try {
-            space.get(3, 4).setState(State.ALIVE);
-            space.get(4, 4).setState(State.ALIVE);
-            space.get(5, 4).setState(State.ALIVE);
-        } catch (OutOfBoundariesException e) {
-            System.out.print(e.getMessage());
+            space.get(1, 1).setState(State.ALIVE);
+            space.get(2, 2).setState(State.ALIVE);
+            space.get(3, 0).setState(State.ALIVE);
+            space.get(3, 1).setState(State.ALIVE);
+            space.get(3, 2).setState(State.ALIVE);
+        } catch (OutOfBoundariesException ex) {
+            System.err.println(ex.getMessage());
         }
+        //space.getSpaceAsList().stream().forEach(cells -> cells.stream().forEach(cell -> cell.setState(State.ALIVE)));
         for(int i=0; i< 100; i++){
-
-
             Operations.print2D(space);
+            System.out.println();
             Operations.generateNextSpace2D(space, new GameOfLifeRule());
             try {
-                System.in.read();
-            } catch (IOException e) {
-                //donotking
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-
         }
 
     }

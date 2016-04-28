@@ -79,6 +79,19 @@ public class Operations {
                 if (i == 0) {
                     try {
                         space.get(i, j).getNeighbours().add(space.get(space.getRows() - 1, j));
+                        space.get(i, j).getNeighbours().add(space.get(i + 1, j));
+                        if (j == 0) {
+                            space.get(i, j).getNeighbours().add(space.get(i, j+1));
+                            space.get(i, j).getNeighbours().add(space.get(i+1, j+1));
+                        } else if (j == space.getColumns()-1) {
+                            space.get(i, j).getNeighbours().add(space.get(i, j-1));
+                            space.get(i, j).getNeighbours().add(space.get(i+1, j-1));
+                        }else{
+                            space.get(i, j).getNeighbours().add(space.get(i, j+1));
+                            space.get(i, j).getNeighbours().add(space.get(i+1, j+1));
+                            space.get(i, j).getNeighbours().add(space.get(i, j-1));
+                            space.get(i, j).getNeighbours().add(space.get(i+1, j-1));
+                        }
                     } catch (OutOfBoundariesException e) {
                         System.out.print(e.getMessage());
                     }
@@ -86,7 +99,20 @@ public class Operations {
                 //bottom boundary
                 if (i == space.getRows() - 1) {
                     try {
+                        space.get(i, j).getNeighbours().add(space.get(space.getRows() - 2, j));
                         space.get(i, j).getNeighbours().add(space.get(0, j));
+                        if (j == 0) {
+                            space.get(i, j).getNeighbours().add(space.get(i, j+1));
+                            space.get(i, j).getNeighbours().add(space.get(i-1, j+1));
+                        } else if (j == space.getColumns()-1) {
+                            space.get(i, j).getNeighbours().add(space.get(i, j-1));
+                            space.get(i, j).getNeighbours().add(space.get(i-1, j-1));
+                        }else{
+                            space.get(i, j).getNeighbours().add(space.get(i, j+1));
+                            space.get(i, j).getNeighbours().add(space.get(i-1, j+1));
+                            space.get(i, j).getNeighbours().add(space.get(i, j-1));
+                            space.get(i, j).getNeighbours().add(space.get(i-1, j-1));
+                        }
                     } catch (OutOfBoundariesException e) {
                         System.out.print(e.getMessage());
                     }
@@ -95,6 +121,13 @@ public class Operations {
                 if (j == 0) {
                     try {
                         space.get(i, j).getNeighbours().add(space.get(i, space.getColumns() - 1));
+                        if (i != 0 && i != space.getRows() - 1) {
+                            space.get(i, j).getNeighbours().add(space.get(i-1, j));
+                            space.get(i, j).getNeighbours().add(space.get(i-1, j+1));
+                            space.get(i, j).getNeighbours().add(space.get(i, j+1));
+                            space.get(i, j).getNeighbours().add(space.get(i+1, j));
+                            space.get(i, j).getNeighbours().add(space.get(i+1, j+1));
+                        }
                     } catch (OutOfBoundariesException e) {
                         System.out.print(e.getMessage());
                     }
@@ -103,6 +136,13 @@ public class Operations {
                 if (j == space.getColumns() - 1) {
                     try {
                         space.get(i, j).getNeighbours().add(space.get(i, 0));
+                        if (i != 0 && i != space.getRows() - 1) {
+                            space.get(i, j).getNeighbours().add(space.get(i-1, j));
+                            space.get(i, j).getNeighbours().add(space.get(i-1, j-1));
+                            space.get(i, j).getNeighbours().add(space.get(i, j-1));
+                            space.get(i, j).getNeighbours().add(space.get(i+1, j));
+                            space.get(i, j).getNeighbours().add(space.get(i+1, j-1));
+                        }
                     } catch (OutOfBoundariesException e) {
                         System.out.print(e.getMessage());
                     }
@@ -139,8 +179,17 @@ public class Operations {
     public static void print2D(Space2D space) {
         space.getSpaceAsList().stream()
                 .forEach((list) -> {
-                    list.stream().forEach(cell -> System.out.print((cell.getState()==State.ALIVE) ? "@" : "_"));
+                    list.stream().forEach(cell -> System.out.print((cell.getState()==State.ALIVE) ? "@ " : "_ "));
                     System.out.println("");
                 });
+    }
+
+    public static void printNeighbours2D(Space2D space2D) {
+        space2D.getSpaceAsList().stream()
+                .forEach(list -> {
+                    list.stream().forEach(cell -> System.out.print(cell.getNeighbours().stream().filter(c -> c.getState() == State.ALIVE).count()+" "));
+                    System.out.println();
+                });
+
     }
 }
