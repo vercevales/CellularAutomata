@@ -12,7 +12,7 @@ public final class GameOfLifeRule implements Rule {
     public State nextCellState(Cell cell) {
         State newState = State.DEAD;
         int aliveNeighbours = (int)cell.getNeighbours().stream()
-                .filter(s -> s.getState() == State.ALIVE)
+                .filter(c -> c.getState() == State.ALIVE)
                 .count();
         if(cell.getState()==State.DEAD && aliveNeighbours == 3) newState = State.ALIVE;
         else if(cell.getState()==State.ALIVE && (aliveNeighbours == 3 || aliveNeighbours == 2) ) newState = State.ALIVE;

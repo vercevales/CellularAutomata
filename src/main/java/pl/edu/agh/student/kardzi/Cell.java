@@ -1,5 +1,8 @@
 package pl.edu.agh.student.kardzi;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.BooleanProperty;
 import pl.edu.agh.student.kardzi.enums.State;
 
 import java.util.ArrayList;
@@ -27,6 +30,10 @@ public class Cell {
 
     public State getState(){
         return state;
+    }
+
+    public BooleanBinding getStageProperty(){
+        Bindings.when(this.state == State.ALIVE).then(true).otherwise(false);
     }
 
     public void setState(State state){
