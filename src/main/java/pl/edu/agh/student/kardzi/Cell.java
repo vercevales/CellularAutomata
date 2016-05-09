@@ -1,5 +1,7 @@
 package pl.edu.agh.student.kardzi;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
@@ -11,8 +13,9 @@ import java.util.List;
 /**
  * Created by kdziegie on 2016-04-18.
  */
-public class Cell {
+public class Cell implements Observable{
     private State state;
+    InvalidationListener listener;
     /*
     internal variables
     */
@@ -32,9 +35,6 @@ public class Cell {
         return state;
     }
 
-    public BooleanBinding getStageProperty(){
-        Bindings.when(this.state == State.ALIVE).then(true).otherwise(false);
-    }
 
     public void setState(State state){
         this.state = state;
@@ -65,5 +65,15 @@ public class Cell {
         }
         final Cell givenCell = (Cell) obj;
         return (this.state==givenCell.getState() );
+    }
+
+    @Override
+    public void addListener(InvalidationListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public void removeListener(InvalidationListener listener) {
+        this.listener = null;
     }
 }

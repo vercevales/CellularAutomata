@@ -14,18 +14,13 @@ import pl.edu.agh.student.kardzi.enums.NeighbourhoodType;
 import pl.edu.agh.student.kardzi.enums.State;
 import pl.edu.agh.student.kardzi.exceptions.OutOfBoundariesException;
 import pl.edu.agh.student.kardzi.impl.GameOfLifeRule;
-import pl.edu.agh.student.kardzi.impl.Rule90;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static javafx.application.Application.launch;
 
 public class Main extends Application{
 
     GridPane root = new GridPane();
     final int size = 10;
+    SimpleBooleanProperty simpleBooleanProperty = new SimpleBooleanProperty(false);
 
 
     public void start(Stage primaryStage) {
@@ -48,9 +43,9 @@ public class Main extends Application{
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
                 Rectangle square = new Rectangle();
-                Color color = Color.WHITE;
                 try {
-                    square.fillProperty().bind(Bindings.when(new SimpleBooleanProperty(space.get(row, col).getState() == State.ALIVE)).then(Color.BLACK).otherwise(Color.WHITE));
+                    simpleBooleanProperty.set(space.get(row, col).getState() == State.ALIVE);
+                    square.fillProperty().bind(Bindings.when(simpleBooleanProperty).then(Color.BLACK).otherwise(Color.WHITE));
                 } catch (OutOfBoundariesException e) {
                     e.printStackTrace();
                 }
@@ -60,21 +55,28 @@ public class Main extends Application{
             }
         }
 
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for(int i = 0; i<100; i++) {
-                    Operations.generateNextSpace2D(space, new GameOfLifeRule());
-                    System.out.println(i);
+        Thread t = new Thread(() -> {
+            for(int i = 0; i<100; i++) {
+                Operations.generateNextSpace2D(space, new GameOfLifeRule());
+                System.out.println(i);
+                for(int j =0; j<size; j++) {
+                    for (int k = 0; k < size; k++){
+                        try {
+                            simpleBooleanProperty.set(space.get(j, k).getState() == State.ALIVE);
+                            System.out.print(simpleBooleanProperty);
+                        } catch (OutOfBoundariesException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         });
         t.start();
-        try {
-            t.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
     }
 
